@@ -4,10 +4,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    puts params[:id]  # ou use logger.debug params[:id]
     @article = Article.find(params[:id])
   end
-  
 
   def new
     @article = Article.new
@@ -19,7 +17,7 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
@@ -33,8 +31,15 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       redirect_to @article
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
+  end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path
   end
 
   private
